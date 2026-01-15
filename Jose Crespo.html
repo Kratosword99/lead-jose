@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Automatización de Leads | Jose Crespo</title>
+  <meta name="description" content="Te monto un sistema que captura tus leads y te avisa al instante. Entrega 24–48h." />
+
+  <style>
+    :root{
+      --bg:#0b1220; --text:#eaf0ff; --muted:#b7c3e6; --line:rgba(255,255,255,.12);
+      --accent:#5b8cff; --accent2:#32d583; --danger:#ff5b6e;
+      --shadow: 0 18px 50px rgba(0,0,0,.45); --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(91,140,255,.35), transparent 55%),
+                  radial-gradient(900px 520px at 10% 10%, rgba(50,213,131,.25), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.35;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 80px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;margin-bottom:14px;}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+    .tag{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.03)}
+    .hero{display:grid;grid-template-columns: 1.25fr .9fr;gap:18px;align-items:stretch;margin-top:10px;}
+    @media (max-width: 900px){.hero{grid-template-columns: 1fr}}
+    .panel{border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);}
+    .kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.03);padding:8px 12px;border-radius:999px;margin-bottom:14px;}
+    .kicker b{color:var(--text)}
+    h1{margin:0 0 10px;font-size:44px;line-height:1.05;letter-spacing:-.8px;}
+    @media (max-width: 520px){h1{font-size:36px}}
+    .sub{margin:0 0 18px;font-size:16px;color:var(--muted);max-width:62ch;}
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .btn{border:none;cursor:pointer;padding:12px 16px;border-radius:12px;font-weight:800;transition: transform .12s ease, filter .12s ease;display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .btnPrimary{background:linear-gradient(135deg, var(--accent), #7aa4ff);color:#071024;box-shadow: 0 12px 26px rgba(91,140,255,.25);}
+    .btnGhost{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);}
+    .micro{margin-top:12px;color:var(--muted);font-size:13px;display:flex;gap:14px;flex-wrap:wrap;}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:8px 10px;border-radius:999px;}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg, rgba(17,31,58,.9), rgba(17,31,58,.55));border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);overflow:hidden;position:relative;}
+    .card::before{content:"";position:absolute;inset:-2px;background: radial-gradient(420px 220px at 70% 0%, rgba(91,140,255,.35), transparent 65%),
+                  radial-gradient(380px 220px at 15% 15%, rgba(50,213,131,.22), transparent 70%);pointer-events:none;opacity:.9;}
+    .card > *{position:relative}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .card p{margin:0 0 12px;color:var(--muted);font-size:13px}
+    .form{display:grid;gap:10px;margin-top:12px;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:520px){.row2{grid-template-columns:1fr}}
+    input, textarea, select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:12px 12px;border-radius:12px;outline:none;}
+    input::placeholder, textarea::placeholder{color:rgba(183,195,230,.75)}
+    textarea{min-height:96px;resize:vertical}
+    .submit{width:100%;justify-content:center;background:linear-gradient(135deg, var(--accent2), #6df0b0);color:#06120c;box-shadow: 0 12px 26px rgba(50,213,131,.18);}
+    .section{margin-top:20px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width:900px){.grid3{grid-template-columns:1fr}}
+    .box{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:var(--radius);padding:16px;}
+    .box h4{margin:0 0 8px}
+    .list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .li{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}
+    .icon{width:20px;height:20px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--line);flex:0 0 auto;margin-top:1px;font-size:12px;}
+    .footer{margin-top:28px;color:rgba(183,195,230,.8);font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px;}
+    .small{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="dot"></span> Jose Crespo</div>
+      <div class="tag">Automatización de leads • Landing + Form + Alerts</div>
+    </div>
+
+    <div class="hero">
+      <div class="panel">
+        <div class="kicker">⚡ <b>Deja de perder leads</b> por responder tarde</div>
+        <h1>Captura tus contactos y recibe alertas al instante.</h1>
+        <p class="sub">
+          Te monto un sistema simple y efectivo: formulario + registro automático (Google Sheets)
+          + notificación inmediata por email (y opcional WhatsApp).
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn btnPrimary" href="#form">Quiero mi sistema de leads →</a>
+          <a class="btn btnGhost" href="#como-funciona">Ver cómo funciona</a>
+        </div>
+
+        <div class="micro">
+          <span class="pill">⏱️ Entrega 24–48h</span>
+          <span class="pill">✅ Demo funcionando</span>
+          <span class="pill">📄 Leads en Sheets</span>
+        </div>
+      </div>
+
+      <div class="card" id="form">
+        <h3>Recibe un demo (gratis)</h3>
+        <p>Completa esto y te muestro el flujo funcionando: lead → registro → alerta.</p>
+
+        <!-- ✅ FORM DIRECTO A APPS SCRIPT (SIN JS / SIN FETCH) -->
+        <form class="form"
+          action="https://script.google.com/macros/s/AKfycbzj_wBOGzvMtc3tkhiQqhz9CgivIdWQt-N0bE07ERxRle1OPLeOYNOjGFBSzNJxCj12/exec"
+          method="POST">
+          <div class="row2">
+            <input name="nombre" placeholder="Nombre" required />
+            <input name="telefono" placeholder="Teléfono (con código país)" required />
+          </div>
+          <input name="email" type="email" placeholder="Email" required />
+
+          <select name="tipo" required>
+            <option value="">¿Qué necesitas?</option>
+            <option value="Landing + Formulario">Landing + Formulario</option>
+            <option value="Automatización de leads">Automatización de leads</option>
+            <option value="Integración">Integración con sistema existente</option>
+          </select>
+
+          <textarea name="mensaje" placeholder="Cuéntame tu caso (opcional)"></textarea>
+
+          <button class="btn submit" type="submit">Enviar y ver demo</button>
+          <div class="small">Sin spam. Solo te contacto para coordinar el demo.</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="section grid2">
+      <div class="box">
+        <h4>Hoy (lo que pasa en la mayoría)</h4>
+        <ul class="list">
+          <li class="li"><span class="icon">❌</span> Leads se quedan en DM / WhatsApp y se pierden.</li>
+          <li class="li"><span class="icon">❌</span> Respuesta tarde = el lead se enfría.</li>
+          <li class="li"><span class="icon">❌</span> No hay registro ni seguimiento claro.</li>
+          <li class="li"><span class="icon">❌</span> “Después lo llamo” se convierte en “se me pasó”.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h4>Con el sistema (lo que tendrás)</h4>
+        <ul class="list">
+          <li class="li"><span class="icon">✅</span> Cada lead queda guardado automáticamente (Sheets).</li>
+          <li class="li"><span class="icon">✅</span> Te llega alerta instantánea por email (opcional WhatsApp).</li>
+          <li class="li"><span class="icon">✅</span> Seguimiento más rápido y ordenado.</li>
+          <li class="li"><span class="icon">✅</span> Base de datos simple para medir y mejorar.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section" id="como-funciona">
+      <div class="panel" style="padding:18px">
+        <h3 style="margin:0 0 8px">Cómo funciona (en 3 pasos)</h3>
+        <p style="margin:0 0 14px;color:var(--muted)">Simple. Rápido. Sin inventos raros.</p>
+
+        <div class="grid3">
+          <div class="box">
+            <h4>1) Captura</h4>
+            <p class="small">Te dejo un formulario listo (o lo integro en tu web/landing).</p>
+          </div>
+          <div class="box">
+            <h4>2) Registro</h4>
+            <p class="small">Cada lead se guarda en Google Sheets (tu CRM básico).</p>
+          </div>
+          <div class="box">
+            <h4>3) Alerta</h4>
+            <p class="small">Te llega notificación inmediata para responder sin perder el lead.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="panel" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <div>
+          <h3 style="margin:0 0 6px">¿Listo para dejar de perder leads?</h3>
+          <div class="small">Pide el demo y lo dejamos andando en 24–48h.</div>
+        </div>
+        <a class="btn btnPrimary" href="#form">Quiero mi demo →</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© <span id="year"></span> Jose Crespo</div>
+      <div class="small">Hecho para convertir: claro, rápido, sin ruido.</div>
+    </div>
+  </div>
+
+  <script>
+    // Solo para el año (nada de fetch)
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
